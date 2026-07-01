@@ -1,0 +1,10 @@
+apiVersion: spire.spiffe.io/v1alpha1
+kind: ClusterSPIFFEID
+metadata:
+  name: nginx
+spec:
+  spiffeIDTemplate: "spiffe://example.org/ns/spire-playground/sa/nginx"
+
+  workloadSelectorTemplates:
+    - "k8s:ns:spire-playground"
+    - "k8s:sa:nginx"
