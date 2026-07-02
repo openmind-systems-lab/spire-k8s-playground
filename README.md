@@ -15,6 +15,7 @@ A hands-on lab for deploying and experimenting with SPIRE on Kubernetes using th
 ![Status](https://img.shields.io/badge/Status-Lab%20%2F%20PoC-orange)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Supported-blue)
 ![SPIFFE](https://img.shields.io/badge/SPIFFE-Compatible-purple)
+![Association](https://img.shields.io/badge/OpenMind%20Systems%20Lab-Loi%201901-blue)
 
 </p>
 
