@@ -54,35 +54,35 @@ It replaces the legacy manual `spire-server entry` workflow with a Kubernetes-na
 ## 🏗️ 1. Install SPIRE (Helm)
 
 ### 📦 Add Helm repository
-
+```bash
 helm repo add spiffe https://spiffe.github.io/helm-charts-hardened/
 helm repo update
-
+```
 ---
 
 ### 🧱 Install SPIRE CRDs
-
+```bash
 helm upgrade --install spire-crds spire-crds \
   --repo https://spiffe.github.io/helm-charts-hardened/ \
   --namespace spire-system \
   --create-namespace
-
+```
 ---
 
 ### ⚙️ Install SPIRE core components
-
+```bash
 helm upgrade --install spire spire \
   --repo https://spiffe.github.io/helm-charts-hardened/ \
   --namespace spire-system
-
+```
 ---
 
 ## 🔍 2. Verify installation
-
+```bash
 kubectl get pods -n spire-system
 kubectl get csidrivers
 kubectl get clusterspiffeid
-
+```
 ---
 
 ## 🧷 3. CRD-based model (IMPORTANT)
@@ -94,16 +94,16 @@ Instead, you use:
 - ClusterSPIFFEID
 
 Apply manifests:
-
+```bash
 kubectl apply -f manifests/client-spiffeid.yaml
 kubectl apply -f manifests/nginx-spiffeid.yaml
-
+```
 ---
 
 ## 🧩 4. ClusterSPIFFEID examples
 
 ### 👤 Client
-
+```yaml
 apiVersion: spire.spiffe.io/v1alpha1
 kind: ClusterSPIFFEID
 metadata:
@@ -116,11 +116,11 @@ spec:
   workloadSelectorTemplates:
     - "k8s:ns:spire-playground"
     - "k8s:sa:client"
-
+```
 ---
 
 ### 🌐 Nginx
-
+```yaml
 apiVersion: spire.spiffe.io/v1alpha1
 kind: ClusterSPIFFEID
 metadata:
@@ -133,21 +133,20 @@ spec:
   workloadSelectorTemplates:
     - "k8s:ns:spire-playground"
     - "k8s:sa:nginx"
-
+```
 ---
 
 ## 🚀 5. Deploy workloads
-
+```bash
 kubectl apply -f manifests/
-
+```
 ---
 
 ## 🔐 6. Verify SPIFFE identity
-
+```bash
 kubectl get pods -n spire-playground
-
 kubectl exec -it -n spire-playground client -- ls /spiffe-workload-api
-
+```
 ---
 
 ## 🧠 7. How SPIRE assigns identities
@@ -189,25 +188,24 @@ kubectl apply -f clusterspiffeid.yaml
 ---
 
 ## 🧹 9. Clean up legacy entries
-
+```
 kubectl exec -it -n spire-system statefulset/spire-server -- spire-server entry show
-
 kubectl exec -it -n spire-system statefulset/spire-server -- \
 spire-server entry delete -entryID <ID>
-
+```
 ---
 
 ## 🔁 10. Restart & debug
-
+```bash
 kubectl rollout restart daemonset spire-agent -n spire-system
 kubectl delete pod -n spire-playground --all
-
+```
 ---
 
 ## 🧪 11. Debug SPIRE agent
-
+```bash
 kubectl logs -n spire-system daemonset/spire-agent
-
+```
 ---
 
 ## 🎯 Expected result
